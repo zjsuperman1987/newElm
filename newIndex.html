@@ -1,0 +1,751 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- meta使用viewport以确保页面可自由缩放 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- 引入 底层css 样式 -->
+    <link type="text/css" rel="stylesheet" href="/Mobile/WeChat/_css/common.css" />
+    <link type="text/css" rel="stylesheet" href="/Mobile/WeChat/_css/CommonPartially.css" />
+    <!--字体样式-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+    <!--轮播swiper.css-->
+    <link rel="stylesheet" href="/Mobile/WeChat/_control/swiper/swiper-4.1.0.min.css">
+    <link href="/_control/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/_control/layui/css/layui.css" rel="stylesheet" type="text/css" />
+    <!--引入pullToRefresh.css-->
+    <link rel="stylesheet" type="text/css" href="/Mobile/WeChat/_control/scroll/reset.css" />
+    <link rel="stylesheet" type="text/css" href="/Mobile/WeChat/_control/scroll/pullToRefresh.css" />
+    <!-- 引入 底层Js 库-->
+    <script type="text/javascript" language="javascript" src="/Mobile/WeChat/_js/jquery.min.js"></script>
+    <script type="text/javascript" language="javascript" src="/Mobile/WeChat/_js/common.js"></script>
+    <!-- 引入 layer 库-->
+    <script type="text/javascript" language="javascript" src="/Mobile/WeChat/_control/layer_mobile/layer.js"></script>
+    <!-- 引入Swiper轮播插件-->
+    <script src="/Mobile/WeChat/_control/swiper/swiper-4.1.0.min.js"></script>
+    <!--引入IScroll-probe.js-->
+    <script src="/Mobile/WeChat/_control/scroll/iscroll-probe.js"></script>
+    <script type="text/javascript" language="javascript" src="/Mobile/WeChat/_control/scroll/pullToRefresh_probe.js"></script>
+    <!--腾讯 定位-->
+    <script type="text/javascript" charset="utf-8" src="https://apis.map.qq.com/tools/geolocation/min?key=EXMBZ-JFFRO-UGVWP-SLOZU-NUGXJ-UIBWJ&referer=gzjsoft"></script>
+    <!--引入自身js-->
+    <script type="text/javascript" language="javascript" src="newIndex.js"></script>
+    <title>商家信息</title>
+    <style type="text/css">
+        *
+        {
+            font-size: 12px;
+        }
+        body
+        {
+            overflow: hidden;
+        }
+        #IndexWrapper
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: .55rem;
+            width: 100%;
+        }
+        .scroller li
+        {
+            padding: 0;
+        }
+        .headerBar
+        {
+            position: relative;
+            width: 100%;
+            height: 1.3rem;
+            background: #1B8CE0;
+        }
+        .currentAddressWrapper
+        {
+            width: 100%;
+            height: .4rem;
+            line-height: .2rem;
+            padding: .1rem;
+            color: White;
+        }
+        .currentAddressWrapper span
+        {
+            margin: .05rem;
+        }
+        .seachBarWrapper
+        {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: .5rem;
+            padding: .1rem;
+            background: #1B8CE0;
+        }
+        .searchBar
+        {
+            width: 100%;
+            height: .3rem;
+            line-height: .3rem;
+            background: white;
+            text-align: center;
+            border-radius: .05rem;
+            transition: width .5s;
+        }
+        .searchBar svg
+        {
+            height: .2rem;
+            vertical-align: middle;
+        }
+        .searchBar span
+        {
+            color: gray;
+        }
+        .hotCustomer
+        {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: .4rem;
+            line-height: .4rem;
+        }
+        .hotCustomer div
+        {
+            float: left;
+            height: 100%;
+            width: 20%;
+            text-align: center;
+            color: White;
+        }
+        .swiperCustomer
+        {
+            height: 1.5rem;
+            position: relative;
+        }
+        .change_bulletClass
+        {
+            width: 8px;
+            height: 2px;
+            display: inline-block;
+            border-radius: 100%;
+            background: #000;
+            opacity: .2;
+            margin: 0 2px;
+            cursor: pointer;
+        }
+        .change_bulletActiveClass
+        {
+            opacity: 1;
+            background: #007aff;
+        }
+        .scFormat
+        {
+            float: left;
+            width: 20%;
+            height: 45%;
+        }
+        .srFormat_top
+        {
+            width: 100%;
+            height: 80%;
+            padding: .1rem;
+        }
+        .srFormat_top img
+        {
+            width: 100%;
+            height: 100%;
+        }
+        .srFormat_bottom
+        {
+            width: 100%;
+            height: 20%;
+            padding: 0 .1rem;
+            text-align: center;
+        }
+        .swiperImg
+        {
+            position: relative;
+            width: 100%;
+            height: 1.2rem;
+            padding: .1rem;
+        }
+        .recommendCustomer
+        {
+            width: 100%;
+            height: .3rem;
+            text-align: center;
+            background: white;
+            font-size: 0;
+            letter-spacing: -3px;
+        }
+        .recommendCustomer i, .recommendCustomer span
+        {
+            display: inline-block;
+        }
+        .line
+        {
+            width: .3rem;
+            height: 50%;
+            border-bottom: 1px solid gray;
+        }
+        .dot
+        {
+            width: .01rem;
+            height: .01rem;
+            background: gray;
+            margin: 0 .05rem;
+        }
+        .recommendCustomer span
+        {
+            height: 100%;
+            line-height: .3rem;
+            letter-spacing: normal;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        /*排序*/
+        .synthesizeSort
+        {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: .3rem;
+            line-height: .3rem;
+            padding: 0 .1rem;
+            border-bottom: 1px solid #D1D1D1;
+            background: white;
+        }
+        .synthesizeSort > div
+        {
+            float: left;
+            width: 33.333%;
+            height: 100%;
+            text-align: center;
+        }
+        .ss_panel
+        {
+            position: absolute;
+            top: .3rem;
+            left: 0;
+            z-index: 2;
+            padding: .1rem;
+            width: 100%;
+            background: white;
+            display: none;
+        }
+        .ss_item
+        {
+            width: 100%;
+            height: .3rem;
+            padding: 0 .1rem;
+        }
+        .ss_item span:nth-child(1)
+        {
+            float: left;
+            margin-left: .1rem;
+        }
+        .ss_item span:nth-child(2)
+        {
+            float: right;
+            height: 100%;
+            padding: .09rem 0;
+            color: #1B8CE0;
+        }
+        .ss_active
+        {
+            color: #1B8CE0;
+        }
+        .ss_active_top
+        {
+            color: Black;
+            font-weight: bold;
+        }
+        /*遮罩*/
+        .ss_shadow
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            padding: .1rem;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.5);
+            display: none;
+        }
+        /*商家列表*/
+        .customerListWrapper
+        {
+            width: 100%;
+        }
+        .customerList
+        {
+            width: 100%;
+            padding: .1rem;
+            background: white;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+        .cl_left
+        {
+            width: 20%;
+            float: left;
+        }
+        .cl_left img
+        {
+            width: .6rem;
+            height: .6rem;
+        }
+        .cl_right
+        {
+            width: 80%;
+            float: left;
+            padding-left: .1rem;
+        }
+        .cl_right div
+        {
+            margin-bottom: .05rem;
+            color: Gray;
+        }
+        .clr_brandName span:nth-child(1)
+        {
+            font-size: 14px;
+            font-weight: bold;
+            color: Black;
+        }
+        .clr_brandName span:nth-child(2)
+        {
+            float: right;
+        }
+        .clr_position span:nth-child(3)
+        {
+            float: right;
+            margin-right: .1rem;
+        }
+        .clr_position .fa-map-marker-alt
+        {
+            float: right;
+            color: #1B8CE0;
+        }
+        .clr_saleCount span:nth-child(2)
+        {
+            margin-left: .1rem;
+        }
+        .clr_discount > div
+        {
+            margin-top: .1rem;
+        }
+        .clr_discount i
+        {
+            margin-right: .1rem;
+            background: gold;
+            padding: 0 .05rem;
+            color: White;
+        }
+        /*搜索页面*/
+        .seachPage
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 10001;
+            width: 100%;
+            background: white;
+            display: none;
+        }
+        .sp_header
+        {
+            position: relative;
+            width: 100%;
+            padding: .1rem 0; /*overflow: hidden;*/
+        }
+        .sph_left
+        {
+            position: absolute;
+            top: .1rem;
+            left: 0;
+            z-index: 1;
+            width: .3rem;
+            height: .3rem;
+            text-align: center;
+            line-height: .3rem;
+            margin-left: .1rem;
+        }
+        .sph_left i
+        {
+            line-height: .3rem;
+        }
+        .sph_right
+        {
+            position: absolute;
+            top: .1rem;
+            right: 0;
+            z-index: 1;
+            width: .3rem;
+            height: .3rem;
+            line-height: .3rem;
+            text-align: center;
+            margin-right: .1rem;
+        }
+        .sph_middle
+        {
+            width: 100%;
+            height: .3rem;
+            padding: 0 .1rem;
+        }
+        .sph_searchWrapper
+        {
+            position: absolute;
+            top: .5rem;
+            left: 0;
+            width: 100%;
+            height: .3rem;
+            padding: 0 .1rem;
+        }
+        .sph_searchWrapper input
+        {
+            padding-left: .1rem;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #eee;
+        }
+        .sph_searchWrapperAnimate
+        {
+            top: .1rem;
+            padding: 0 .5rem;
+            transition: all .3s;
+        }
+        .returnAnimate
+        {
+            top: -.4rem;
+            padding: .1rem .5rem;
+        }
+        .returnAnimateLast
+        {
+            top: 0;
+            padding: .1rem;
+            transition: all .3s;
+        }
+        /*历史 搜索*/
+        .sp_history
+        {
+        }
+        .sp_historyTop
+        {
+            padding: .1rem;
+            overflow: hidden;
+        }
+        .spht_left
+        {
+            float: left;
+        }
+        .spht_left span
+        {
+            font-weight: bold;
+            color: Black;
+        }
+        .spht_right
+        {
+            float: right;
+        }
+        .sp_historyContent
+        {
+            padding: .1rem .2rem .1rem .1rem;
+            overflow: hidden;
+        }
+        .sphc_item
+        {
+            float: left;
+            padding: .05rem .1rem;
+            margin-left: .1rem;
+            text-align: center;
+            background: #eee;
+            border-radius: .05rem;
+        }
+        .sphc_item:first-child
+        {
+            margin: 0;
+        }
+        .sp_container
+        {
+            position: absolute;
+            top: .5rem;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: red; /*display:none;*/
+        }
+        /*搜索页面 商家列表*/
+        .sp_customerList 
+        {
+            margin-bottom: .1rem;
+            border: none;  
+        }
+    </style>
+</head>
+<body>
+    <!--主页面-->
+    <div id="IndexWrapper">
+        <ul>
+            <li>
+                <!--头部-->
+                <div class="headerBar">
+                    <!--我的位置-->
+                    <div class="currentAddressWrapper">
+                        <i class="fas fa-map-marker-alt"></i><span>我的位置</span> <i class="fas fa-caret-down">
+                        </i>
+                    </div>
+                    <!--搜索-->
+                    <div class="seachBarWrapper">
+                        <div class="searchBar">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16"><path fill-opacity=".38" d="M14.778 13.732a.739.739 0 1 1-1.056 1.036l-2.515-2.565a.864.864 0 0 1-.01-1.206 4.894 4.894 0 0 0 1.357-3.651c-.126-2.492-2.156-4.52-4.648-4.647a4.911 4.911 0 0 0-5.16 5.163c.126 2.475 2.13 4.496 4.605 4.642.451.026.896-.008 1.326-.1a.739.739 0 0 1 .308 1.446c-.56.12-1.137.164-1.72.13-3.227-.19-5.83-2.815-5.995-6.042a6.39 6.39 0 0 1 6.71-6.715c3.25.165 5.884 2.8 6.05 6.048a6.37 6.37 0 0 1-1.374 4.3l2.12 2.161z"></path></svg>
+                            <span>想要什么搜一搜</span>
+                        </div>
+                    </div>
+                    <!--热门推荐-->
+                    <div class="hotCustomer">
+                        <div>
+                            <span>内增高</span></div>
+                        <div>
+                            <span>耐克尔</span></div>
+                        <div>
+                            <span>恨天高</span></div>
+                        <div>
+                            <span>蛋炒饭</span></div>
+                        <div>
+                            <span>金士顿</span></div>
+                    </div>
+                </div>
+                <!--轮播商家-->
+                <!-- Slider main container -->
+                <div class="swiperCustomer">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide">
+                        </div>
+                        <div class="swiper-slide">
+                        </div>
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination" style="bottom: 0px">
+                    </div>
+                </div>
+                <!--轮播图片-->
+                <div class="swiperImg">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide">
+                            <img style="width: 100%; margin: 0 auto; height: 100%;" src="http://wx.zeke.cn/UpLoad/%E5%BD%A2%E8%B1%A1%E5%9B%BE/A.JPG"
+                                alt="" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img style="width: 100%; margin: 0 auto; height: 100%;" src="http://wx.zeke.cn/UpLoad/%E5%BD%A2%E8%B1%A1%E5%9B%BE/B.JPG"
+                                alt="" /></div>
+                        <div class="swiper-slide">
+                            <img style="width: 100%; margin: 0 auto; height: 100%;" src="http://wx.zeke.cn/UpLoad/%E5%BD%A2%E8%B1%A1%E5%9B%BE/C.JPG"
+                                alt="" /></div>
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination" style="bottom: 20px">
+                    </div>
+                </div>
+                <!--推荐商家-->
+                <div class="recommendCustomer">
+                    <i class="line"></i><i class="dot"></i><span>推荐商家</span> <i class="dot"></i><i class="line">
+                    </i>
+                </div>
+                <!--综合排序-->
+                <div class="synthesizeSort">
+                    <div class="categroy">
+                        <span>综合排序</span> <i class="fas sort_triangle fa-caret-down" style="color: gray;
+                            margin-left: .05rem"></i>
+                        <div class="ss_panel">
+                            <div class="ss_item ss_active">
+                                <span>综合排序</span> <span><i class="fa fa-check"></i></span>
+                            </div>
+                            <div class="ss_item">
+                                <span>销量最高</span>
+                            </div>
+                            <div class="ss_item">
+                                <span>距离最近</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span>销量最高</span></div>
+                    <div>
+                        <span>距离最近</span></div>
+                </div>
+                <!--遮罩-->
+                <div class="ss_shadow">
+                </div>
+                <!--商家列表-->
+                <div class="customerListWrapper">
+                    <!--<div class="customerList">
+                        <div class="cl_left">
+                            <img src="../../_image/Login.jpg" />
+                        </div>
+                        <div class="cl_right">
+                            <div class="clr_brandName">
+                                <span>商品名称</span> <span>...</span>
+                            </div>
+                            <div class="clr_formateType">
+                                <span>品牌业态</span>
+                            </div>
+                            <div class="clr_position">
+                                <span>距离</span> <i class="fas fa-map-marker-alt"></i><span>83分钟 | 173m</span>
+                            </div>
+                            <div class="clr_saleCount">
+                                <span>销售量</span> <span>1000件</span>
+                            </div>
+                            <div class="clr_discount">
+                                <div>
+                                    <i>满减</i><span>满10减6, 满30减15, 满50减20</span></div>
+                                <div>
+                                    <i>特价</i><span>特价商品一元起</span></div>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!--搜索页面-->
+    <div class="seachPage">
+        <div class="sp_header">
+            <div class="sph_left">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="sph_right">
+                <span>搜索</span></div>
+            <div class="sph_middle">
+                <div class="sph_searchWrapper">
+                    <input type="text" placeholder="想要什么搜一搜" />
+                </div>
+            </div>
+        </div>
+        <!--历史搜索-->
+        <div class="sp_history">
+            <div class="sp_historyTop">
+                <div class="spht_left">
+                    <span>历史搜索</span></div>
+                <div class="spht_right">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+            </div>
+            <div class="sp_historyContent">
+                <div class="sphc_item">
+                    <span>服装</span></div>
+                <div class="sphc_item">
+                    <span>外贸</span></div>
+                <div class="sphc_item">
+                    <span>女士长袜</span></div>
+            </div>
+        </div>
+        <!--主内容-->
+        <div class="sp_container">
+            <!--搜索页面 排序-->
+            <div class="synthesizeSort">
+                <div class="categroy">
+                    <span>综合排序</span> <i class="fas sort_triangle fa-caret-down" style="color: gray;
+                        margin-left: .05rem"></i>
+                    <div class="ss_panel">
+                        <div class="ss_item ss_active">
+                            <span>综合排序</span> <span><i class="fa fa-check"></i></span>
+                        </div>
+                        <div class="ss_item">
+                            <span>销量最高</span>
+                        </div>
+                        <div class="ss_item">
+                            <span>距离最近</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <span>销量最高</span></div>
+                <div>
+                    <span>距离最近</span></div>
+            </div>
+            <!--搜索页面 商家列表 滚动加载-->
+            <div class="sp_wrapper">
+                <ul>
+                    <li>
+                        <!--<div class="customerList sp_customerList">
+                            <div class="cl_left">
+                                <img src="../../_image/Login.jpg" />
+                            </div>
+                            <div class="cl_right">
+                                <div class="clr_brandName">
+                                    <span>商品名称</span> <span>...</span>
+                                </div>
+                                <div class="clr_formateType">
+                                    <span>品牌业态</span>
+                                </div>
+                                <div class="clr_position">
+                                    <span>距离</span> <i class="fas fa-map-marker-alt"></i><span>83分钟 | 173m</span>
+                                </div>
+                                <div class="clr_saleCount">
+                                    <span>销售量</span> <span>1000件</span>
+                                </div>
+                                <div class="clr_discount">
+                                    <div>
+                                        <i>满减</i><span>满10减6, 满30减15, 满50减20</span></div>
+                                    <div>
+                                        <i>特价</i><span>特价商品一元起</span></div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--底部-->
+    <div class="nav-body-footer">
+        <ul>
+            <li class="nav-body-footlist"><a href="/Mobile/WeChat/newIndex.htm">
+                <div class="nav-foot-fixed">
+                    <img src="/Mobile/WeChat/_image/nav_home_c.png" id="NavHome">
+                </div>
+                <div class="nav-body-font">
+                    <p class="nav-body-fontcss">
+                        首页</p>
+                </div>
+            </a></li>
+            <li class="nav-body-footlist"><a href="/Mobile/WeChat/Nearby.htm">
+                <div class="nav-foot-fixed">
+                    <img src="/Mobile/WeChat/_image/nav_address.png" id="NavAddress">
+                </div>
+                <div class="nav-body-font">
+                    <p class="nav-body-fontcss">
+                        附近</p>
+                </div>
+            </a></li>
+            <li class="nav-body-footlist"><a href="/Mobile/WeChat/Order.htm">
+                <div class="nav-foot-fixed">
+                    <img src="/Mobile/WeChat/_image/nav_order.png" id="NavOrder">
+                </div>
+                <div class="nav-body-font">
+                    <p class="nav-body-fontcss">
+                        订单</p>
+                </div>
+            </a></li>
+            <li class="nav-body-footlist"><a href="/Mobile/WeChat/MyInfo.htm">
+                <div class="nav-foot-fixed">
+                    <img src="/Mobile/WeChat/_image/nav_mine.png" id="NavMine">
+                </div>
+                <div class="nav-body-font">
+                    <p class="nav-body-fontcss">
+                        我的</p>
+                </div>
+            </a></li>
+        </ul>
+    </div>
+</body>
+</html>
